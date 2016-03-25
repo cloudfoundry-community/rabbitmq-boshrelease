@@ -1,0 +1,26 @@
+---
+packages:
+- name: erlang
+  version: a405977848da398897bbc623c570ddcdcaab799b
+  fingerprint: a405977848da398897bbc623c570ddcdcaab799b
+  sha1: a9c51e96469c4f4a1b62fd67d030eebab560252e
+  dependencies: []
+- name: rabbitmq
+  version: b29c6a724f741d8da813b8969a302e6a51a34b03
+  fingerprint: b29c6a724f741d8da813b8969a302e6a51a34b03
+  sha1: e8b288b4758ec6809af83acaac2f3039907e1382
+  dependencies:
+  - erlang
+jobs:
+- name: rabbitmq
+  version: 4817e0153225340c80958de9f5aa3efb4a81a97c
+  fingerprint: 4817e0153225340c80958de9f5aa3efb4a81a97c
+  sha1: 76384e6dc97c88485e354945ebbc00f7888573bb
+license:
+  version: ec16b6c95de5c9122dcf472815239a76d1b6c9ea
+  fingerprint: ec16b6c95de5c9122dcf472815239a76d1b6c9ea
+  sha1: d236be30fa303f3a7812a6adf293b92acb98a050
+commit_hash: 7085409c
+uncommitted_changes: true
+name: rabbitmq
+version: '1'
