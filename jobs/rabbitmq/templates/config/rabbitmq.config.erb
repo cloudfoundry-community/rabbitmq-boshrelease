@@ -1,0 +1,11 @@
+[
+    {rabbit, [
+      {tcp_listeners, [<%= p('rabbitmq.port') %>]},
+      {default_user, <<"<%= p('rabbitmq.default_user') %>">>},
+      {default_pass, <<"<%= p('rabbitmq.default_password') %>">>}
+    ]}
+
+    <% if p('rabbitmq.management') %>
+      ,{rabbitmq_management, [{listener, [{port, <%= p('rabbitmq.management_port') %> }]}]}
+    <% end %>
+].

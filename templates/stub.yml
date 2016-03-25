@@ -9,6 +9,13 @@ meta:
 
 director_uuid: PLACEHOLDER-DIRECTOR-UUID
 
+jobs:
+  - name: rabbitmq
+    instances: 3
+    networks:
+      - name: rabbitmq1
+        static_ips: (( static_ips 0 1 2 ))
+
 releases:
   - name: rabbitmq
     version: latest

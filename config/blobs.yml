@@ -1,1 +1,9 @@
---- {}
+---
+erlang/otp_src_18.2.1.tar.gz:
+  object_id: 8f931228-6e75-4b59-8acd-2c3656ff53e1
+  sha: 4397f29801fd430ef7e9ff03ea814807bf954e20
+  size: 68110840
+rabbitmq/rabbitmq-server-generic-unix-3.6.0.tar.xz:
+  object_id: 7f7485b3-f67a-4e7c-876c-aae96a5c42a7
+  sha: d742789df37d971b46efa9e0dc20810a0ec8dc93
+  size: 4858860

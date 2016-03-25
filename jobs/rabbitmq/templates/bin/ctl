@@ -1,0 +1,51 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Setup env vars and folders for the webapp_ctl script
+source /var/vcap/jobs/rabbitmq/helpers/ctl_setup.sh 'rabbitmq'
+
+export PORT=${PORT:-5000}
+export LANG=en_US.UTF-8
+export PATH=$PATH:/var/vcap/packages/erlang/bin:/var/vcap/packages/rabbitmq/sbin
+export RABBITMQ_HOME=/var/vcap/jobs/rabbitmq
+export RABBITMQ_CONFIG_FILE=$RABBITMQ_HOME/config/rabbitmq
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE $JOB_NAME
+
+    # store pid in $PIDFILE
+    echo $$ > $PIDFILE
+
+    echo <%= p('rabbitmq.erlang_cookie') %> > /home/vcap/.erlang.cookie
+    chown vcap:vcap /home/vcap/.erlang.cookie
+    chmod 600 /home/vcap/.erlang.cookie
+
+    mkdir -p /var/vcap/packages/rabbitmq/var/log
+    chown vcap:vcap /var/vcap/packages/rabbitmq/var/log
+    mkdir -p /var/vcap/packages/rabbitmq/var/lib/rabbitmq/
+    chown vcap:vcap /var/vcap/packages/rabbitmq/var/lib/rabbitmq/
+
+    <% if p('rabbitmq.management') %>
+      rabbitmq-plugins enable --offline rabbitmq_management >>$LOG_DIR/$JOB_NAME.log
+    <% end %>
+
+    exec chpst -u vcap:vcap rabbitmq-server \
+         >>$LOG_DIR/$JOB_NAME.log 2>&1
+
+    ;;
+
+  stop)
+    rabbitmqctl stop
+
+    ;;
+  *)
+    echo "Usage: rabbitmq_ctl {start|stop}"
+
+    ;;
+
+esac
+exit 0

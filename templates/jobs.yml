@@ -9,15 +9,12 @@ update:
   serial: false
 
 jobs:
-  - name: just_install_packages
+  - name: rabbitmq
     templates:
-    - name: just_install_packages
-      release: rabbitmq
+      - { release: rabbitmq, name: rabbitmq }
     instances: 1
     persistent_disk: 0
     resource_pool: small_z1
-    networks: (( param "please set just_install_package networks" ))
+    networks: (( param "please set rabbitmq networks" ))
 
 networks: (( param "please set networks" ))
-
-properties: {}

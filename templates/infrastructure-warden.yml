@@ -1,36 +1,62 @@
+---
+name: rabbitmq
+compilation:
+  cloud_properties:
+    cpu: 1
+    ram: 2048
+    disk: 8_000
+  network: rabbitmq1
+  reuse_compilation_vms: true
+  workers: 6
+director_uuid: <%= `bosh status --uuid` %>
+jobs:
+- name: rabbitmq
+  instances: 1
+  resource_pool: small_z1
+  networks:
+  - name: rabbitmq1
+    static_ips:
+    - 10.244.78.2
+  persistent_disk: 0
+  properties:
+    rabbitmq:
+      plugins: [rabbitmq_management]
+      default_user: rabbitmq
+      default_password: rabbitmq
+      erlang_cookie: thin-mint
+  templates:
+  - name: rabbitmq
+    release: rabbitmq
 meta:
   environment: rabbitmq-warden
-
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
     version: latest
-
-update:
-  canaries: 1
-  max_in_flight: 50
-  canary_watch_time: 1000-30000
-  update_watch_time: 1000-30000
-
-jobs:
-  - name: just_install_packages
-    networks:
-      - name: rabbitmq1
-
-compilation:
-  cloud_properties:
-    name: random
-
-resource_pools:
-  - name: small_z1
-    cloud_properties:
-      name: random
-
 networks:
 - name: rabbitmq1
   type: manual
   subnets:
-  - range: 10.244.41.0/24
-    name: rabbitmq1
-    gateway: 10.244.41.1
-    static:
-      - 10.244.41.2 - 10.244.41.60
+    - range: 10.244.78.0/24
+      gateway: 10.244.78.1
+      static: 
+      - 10.244.78.2 - 10.244.78.100
+properties: {}
+releases:
+- name: rabbitmq
+  version: latest
+resource_pools:
+- name: small_z1
+  network: rabbitmq1
+  cloud_properties:
+    cpu: 1
+    ram: 1_024
+    disk: 4_096
+  stemcell:
+    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+    version: latest
+update:
+  canaries: 1
+  canary_watch_time: 1000-30000
+  max_in_flight: 50
+  serial: false
+  update_watch_time: 1000-30000
