@@ -8,10 +8,10 @@ To use this bosh release, first upload it to your bosh:
 bosh target BOSH_HOST
 git clone https://github.com/cloudfoundry-community/rabbitmq-boshrelease.git
 cd rabbitmq-boshrelease
-bosh upload release releases/rabbitmq-1.yml
+bosh upload release releases/rabbitmq/rabbitmq-1.yml
 ```
 
-For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster:
+For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster. Note that this requires that you have installed [spruce](https://github.com/geofffranks/spruce).                                                                                                                                                                                                                                                                                                                                                 
 
 ```
 templates/make_manifest warden
